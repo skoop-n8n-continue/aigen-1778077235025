@@ -1,0 +1,230 @@
+/* General Resets */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+}
+
+#app-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 1s ease, color 1s ease;
+}
+
+/* Clock Wrapper */
+.clock-wrapper {
+    position: relative;
+    width: 70vmin;
+    height: 70vmin;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 1s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.clock {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2vmin solid transparent; /* Managed by themes */
+    transition: border-color 1s ease, background-color 1s ease;
+}
+
+/* Hands */
+.hand {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform-origin: bottom center;
+    border-radius: 10px;
+    z-index: 10;
+    transition: background-color 1s ease;
+}
+
+.hour-hand {
+    width: 2vmin;
+    height: 25vmin;
+    margin-left: -1vmin;
+}
+
+.minute-hand {
+    width: 1.2vmin;
+    height: 32vmin;
+    margin-left: -0.6vmin;
+}
+
+.second-hand {
+    width: 0.6vmin;
+    height: 35vmin;
+    margin-left: -0.3vmin;
+    z-index: 15;
+}
+
+/* The little tail for the second hand */
+.second-hand::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 5vmin;
+    background-color: inherit;
+    border-radius: 10px;
+}
+
+.center-dot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 4vmin;
+    height: 4vmin;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 20;
+    transition: background-color 1s ease;
+}
+
+/* Markers */
+.markers {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.marker {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 1vmin;
+    height: 4vmin;
+    margin-left: -0.5vmin;
+    transform-origin: 50% 35vmin; /* Half of clock width */
+    border-radius: 2px;
+    transition: background-color 1s ease;
+}
+
+.marker.main {
+    width: 1.5vmin;
+    height: 5vmin;
+    margin-left: -0.75vmin;
+}
+
+.marker-text {
+    position: absolute;
+    top: 6vmin;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 4vmin;
+    font-weight: bold;
+    transition: color 1s ease;
+}
+
+/* Info Panel */
+.info-panel {
+    margin-top: 5vmin;
+    text-align: center;
+    z-index: 30;
+}
+
+.info-panel h2 {
+    font-size: 3vmin;
+    margin-bottom: 0.5vmin;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.info-panel p {
+    font-size: 1.5vmin;
+    opacity: 0.7;
+}
+
+/* =========================================
+   THEMES
+   ========================================= */
+
+/* 1. Classic */
+.face-classic {
+    background-color: #f0f0f0;
+    color: #333;
+}
+.face-classic .clock {
+    background-color: #fff;
+    border-color: #333;
+}
+.face-classic .hour-hand, .face-classic .minute-hand { background-color: #333; }
+.face-classic .second-hand { background-color: #e74c3c; }
+.face-classic .center-dot { background-color: #333; border: 0.5vmin solid #e74c3c; }
+.face-classic .marker { background-color: #aaa; }
+.face-classic .marker.main { background-color: #333; }
+.face-classic .marker-text { color: #333; }
+
+/* 2. Dark Mode */
+.face-dark {
+    background-color: #1a1a2e;
+    color: #fff;
+}
+.face-dark .clock {
+    background-color: #16213e;
+    border-color: #0f3460;
+    box-shadow: 0 0 40px rgba(15, 52, 96, 0.5);
+}
+.face-dark .hour-hand, .face-dark .minute-hand { background-color: #e94560; }
+.face-dark .second-hand { background-color: #0f3460; }
+.face-dark .center-dot { background-color: #16213e; border: 0.5vmin solid #e94560; }
+.face-dark .marker { background-color: #333; }
+.face-dark .marker.main { background-color: #e94560; }
+.face-dark .marker-text { color: #fff; }
+
+/* 3. Minimalist */
+.face-minimal {
+    background-color: #e0e5ec;
+    color: #555;
+}
+.face-minimal .clock-wrapper {
+    box-shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px rgba(255,255,255, 0.5);
+}
+.face-minimal .clock {
+    background-color: #e0e5ec;
+    border-color: transparent;
+}
+.face-minimal .hour-hand { background-color: #555; border-radius: 20px; }
+.face-minimal .minute-hand { background-color: #888; border-radius: 20px; }
+.face-minimal .second-hand { background-color: #00b7af; } /* Using default teal */
+.face-minimal .center-dot { background-color: #00b7af; }
+.face-minimal .marker { background-color: transparent; } /* Hidden */
+.face-minimal .marker.main { background-color: #a3b1c6; }
+.face-minimal .marker-text { display: none; } /* Hidden */
+
+/* 4. Neon Cyberpunk */
+.face-neon {
+    background-color: #0b0c10;
+    color: #66fcf1;
+}
+.face-neon .clock {
+    background-color: #1f2833;
+    border-color: #45a29e;
+    box-shadow: 0 0 15px #45a29e, inset 0 0 15px #45a29e;
+}
+.face-neon .hour-hand { background-color: #c5c6c7; box-shadow: 0 0 10px #c5c6c7; }
+.face-neon .minute-hand { background-color: #66fcf1; box-shadow: 0 0 10px #66fcf1; }
+.face-neon .second-hand { background-color: #f13c20; box-shadow: 0 0 10px #f13c20; }
+.face-neon .center-dot { background-color: #1f2833; border: 0.5vmin solid #66fcf1; }
+.face-neon .marker { background-color: #45a29e; }
+.face-neon .marker.main { background-color: #66fcf1; box-shadow: 0 0 5px #66fcf1; }
+.face-neon .marker-text { color: #c5c6c7; text-shadow: 0 0 5px #c5c6c7; }
