@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const markersContainer = document.getElementById('markers');
     const appContainer = document.getElementById('app-container');
     const faceNameDisplay = document.getElementById('face-name');
+    const clockElement = document.getElementById('clock-element');
+    const effectsLayer = document.getElementById('effects-layer');
 
     // Generate markers (1 to 12)
     for (let i = 1; i <= 60; i++) {
@@ -95,4 +97,57 @@ document.addEventListener('DOMContentLoaded', () => {
             cycleInfo.innerText = "Manual mode (Auto-cycle paused)";
         });
     });
+
+    // Random Animations Logic
+    function triggerRandomAnimation() {
+        const theme = themes[currentThemeIndex].class;
+
+        // Clear previous effects
+        effectsLayer.innerHTML = '';
+        clockElement.classList.remove('neon-glitch');
+
+        if (theme === 'face-classic') {
+            // Sweep reflection
+            const glint = document.createElement('div');
+            glint.className = 'classic-glint';
+            effectsLayer.appendChild(glint);
+            setTimeout(() => glint.remove(), 1500);
+
+        } else if (theme === 'face-dark') {
+            // Shooting star
+            const star = document.createElement('div');
+            star.className = 'dark-star';
+
+            // Random position in the upper right quadrant
+            const top = Math.random() * 30 + 10;
+            const right = Math.random() * 30 + 10;
+
+            star.style.top = `${top}%`;
+            star.style.right = `${right}%`;
+
+            effectsLayer.appendChild(star);
+            setTimeout(() => star.remove(), 1000);
+
+        } else if (theme === 'face-minimal') {
+            // Center ripple
+            const ripple = document.createElement('div');
+            ripple.className = 'minimal-ripple';
+            effectsLayer.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 2000);
+
+        } else if (theme === 'face-neon') {
+            // Glitch effect on the clock wrapper
+            clockElement.classList.add('neon-glitch');
+            setTimeout(() => {
+                clockElement.classList.remove('neon-glitch');
+            }, 300); // Glitch for 300ms
+        }
+
+        // Schedule next random animation
+        const nextTime = Math.random() * 4000 + 2000; // Random time between 2 to 6 seconds
+        setTimeout(triggerRandomAnimation, nextTime);
+    }
+
+    // Start random animations
+    setTimeout(triggerRandomAnimation, 3000);
 });
