@@ -61,18 +61,38 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
     let currentThemeIndex = 0;
 
-    function cycleTheme() {
-        // Remove current theme
+    const themeBtns = document.querySelectorAll('.theme-btn');
+    const cycleInfo = document.getElementById('cycle-info');
+
+    function setTheme(index) {
         appContainer.classList.remove(themes[currentThemeIndex].class);
-
-        // Advance to next
-        currentThemeIndex = (currentThemeIndex + 1) % themes.length;
-
-        // Add new theme
+        currentThemeIndex = index;
         appContainer.classList.add(themes[currentThemeIndex].class);
         faceNameDisplay.innerText = themes[currentThemeIndex].name;
+
+        // Update active button
+        themeBtns.forEach((btn, i) => {
+            if (i === index) btn.classList.add('active');
+            else btn.classList.remove('active');
+        });
+    }
+
+    function cycleTheme() {
+        setTheme((currentThemeIndex + 1) % themes.length);
     }
 
     // Cycle themes every 15 seconds automatically for digital signage
-    setInterval(cycleTheme, 15000);
+    let autoCycleInterval = setInterval(cycleTheme, 15000);
+
+    // Handle manual selection
+    themeBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const index = parseInt(e.target.getAttribute('data-index'));
+            setTheme(index);
+
+            // Stop automatic cycle on manual selection
+            clearInterval(autoCycleInterval);
+            cycleInfo.innerText = "Manual mode (Auto-cycle paused)";
+        });
+    });
 });
