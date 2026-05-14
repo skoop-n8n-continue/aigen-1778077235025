@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
     let currentThemeIndex = 0;
 
-    const themeBtns = document.querySelectorAll('.theme-btn');
+    const themeDropdown = document.getElementById('theme-dropdown');
     const cycleInfo = document.getElementById('cycle-info');
 
     function setTheme(index) {
@@ -72,11 +72,8 @@ document.addEventListener('DOMContentLoaded', () => {
         appContainer.classList.add(themes[currentThemeIndex].class);
         faceNameDisplay.innerText = themes[currentThemeIndex].name;
 
-        // Update active button
-        themeBtns.forEach((btn, i) => {
-            if (i === index) btn.classList.add('active');
-            else btn.classList.remove('active');
-        });
+        // Update dropdown
+        themeDropdown.value = index.toString();
     }
 
     function cycleTheme() {
@@ -87,15 +84,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let autoCycleInterval = setInterval(cycleTheme, 15000);
 
     // Handle manual selection
-    themeBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const index = parseInt(e.target.getAttribute('data-index'));
-            setTheme(index);
+    themeDropdown.addEventListener('change', (e) => {
+        const index = parseInt(e.target.value);
+        setTheme(index);
 
-            // Stop automatic cycle on manual selection
-            clearInterval(autoCycleInterval);
-            cycleInfo.innerText = "Manual mode (Auto-cycle paused)";
-        });
+        // Stop automatic cycle on manual selection
+        clearInterval(autoCycleInterval);
+        cycleInfo.innerText = "Manual mode (Auto-cycle paused)";
     });
 
     // Random Animations Logic
