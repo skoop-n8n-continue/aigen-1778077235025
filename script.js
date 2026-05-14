@@ -56,10 +56,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Theme Management
     const themes = [
-        { class: 'face-classic', name: 'Classic Face' },
-        { class: 'face-dark', name: 'Dark Mode' },
-        { class: 'face-minimal', name: 'Minimalist' },
-        { class: 'face-neon', name: 'Neon Cyberpunk' }
+        { class: 'face-classic', bgClass: 'bg-classic', name: 'Classic Face' },
+        { class: 'face-dark', bgClass: 'bg-dark', name: 'Dark Mode' },
+        { class: 'face-minimal', bgClass: 'bg-minimal', name: 'Minimalist' },
+        { class: 'face-neon', bgClass: 'bg-neon', name: 'Neon Cyberpunk' }
     ];
     let currentThemeIndex = 0;
 
@@ -68,8 +68,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function setTheme(index) {
         appContainer.classList.remove(themes[currentThemeIndex].class);
+        document.getElementById("bg-effects").className = "";
         currentThemeIndex = index;
         appContainer.classList.add(themes[currentThemeIndex].class);
+        document.getElementById("bg-effects").classList.add(themes[currentThemeIndex].bgClass);
         faceNameDisplay.innerText = themes[currentThemeIndex].name;
 
         // Update dropdown
