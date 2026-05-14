@@ -359,7 +359,7 @@ body, html {
         rgba(69, 162, 158, 0.1) 2px,
         rgba(69, 162, 158, 0.1) 4px
     );
-    animation: scanlinesBgNeon 10s linear infinite;
+    animation: scanlinesBgNeon 10s linear infinite, neonPulse 4s ease-in-out infinite alternate;
 }
 @keyframes scanlinesBgNeon {
     0% { background-position: 0 0; }
@@ -434,4 +434,23 @@ body, html {
     60% { transform: translate(2px, 2px) }
     80% { transform: translate(2px, -2px) }
     100% { transform: translate(0) }
+}
+
+@keyframes neonPulse {
+    0% { opacity: 0.8; }
+    100% { opacity: 1; filter: brightness(1.2); }
+}
+
+/* Enhancements to Backgrounds */
+.bg-classic {
+    background-size: 200% 200%;
+    animation: rotateBgClassic 20s linear infinite, bgClassicFloat 15s ease-in-out infinite alternate;
+}
+@keyframes bgClassicFloat {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 100% 100%; }
+}
+
+.bg-dark {
+    background-size: 300% 300%;
 }
